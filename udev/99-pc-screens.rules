@@ -1,0 +1,44 @@
+# PC internal screens — non-root access
+# ======================================
+# Install to /etc/udev/rules.d/99-pc-screens.rules
+#
+# TAG+="uaccess" grants the currently logged-in seat user an ACL on the node,
+# so no re-login is needed. GROUP="plugdev" is the fallback for headless /
+# system-service use (user hieubt is already in plugdev).
+
+# --- Jungle Leopard / HONGTAI 9.16" screen (RT-Thread CDC-ACM) ---
+# Command + JPEG image channel at 2,000,000 baud on /dev/ttyACM*
+# ID_MM_DEVICE_IGNORE stops ModemManager from probing the port with AT commands
+# on hotplug — it holds the port open and corrupts the first frames otherwise.
+SUBSYSTEM=="tty", ATTRS{idVendor}=="33c3", ATTRS{idProduct}=="7788", \
+  MODE="0660", GROUP="plugdev", TAG+="uaccess", SYMLINK+="jungleleopard", \
+  ENV{ID_MM_DEVICE_IGNORE}="1", ENV{ID_MM_PORT_IGNORE}="1"
+
+# Raw USB node for the same device (needed if we bypass cdc_acm)
+SUBSYSTEM=="usb", ATTR{idVendor}=="33c3", ATTR{idProduct}=="7788", \
+  MODE="0660", GROUP="plugdev", TAG+="uaccess"
+
+# --- Lian Li 8.8" Universal Screen ---
+# LCD mode: vendor-specific bulk endpoints (libusb)
+SUBSYSTEM=="usb", ATTR{idVendor}=="1cbe", ATTR{idProduct}=="a088", \
+  MODE="0660", GROUP="plugdev", TAG+="uaccess"
+
+# ARGB frame around the screen (WCH MCU, vendor-specific bulk)
+SUBSYSTEM=="usb", ATTR{idVendor}=="0416", ATTR{idProduct}=="8050", \
+  MODE="0660", GROUP="plugdev", TAG+="uaccess"
+
+# Desktop mode: the same panel re-enumerates as a CH340-family device
+SUBSYSTEM=="usb", ATTR{idVendor}=="1a86", ATTR{idProduct}=="ace1", \
+  MODE="0660", GROUP="plugdev", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTR{idVendor}=="1a86", ATTR{idProduct}=="ad21", \
+  MODE="0660", GROUP="plugdev", TAG+="uaccess"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="ace1", \
+  MODE="0660", GROUP="plugdev", TAG+="uaccess"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="ad21", \
+  MODE="0660", GROUP="plugdev", TAG+="uaccess"
+
+# --- EVDI virtual display (desktop mode needs to create evdi nodes) ---
+ACTION=="add", SUBSYSTEM=="module", KERNEL=="evdi", \
+  RUN+="/bin/chmod 0666 /sys/devices/evdi/add /sys/devices/evdi/remove_all"
+SUBSYSTEM=="drm", KERNEL=="card*", SUBSYSTEMS=="platform", DRIVERS=="evdi", \
+  MODE="0660", GROUP="plugdev", TAG+="uaccess"

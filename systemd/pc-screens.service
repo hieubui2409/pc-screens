@@ -1,0 +1,23 @@
+[Unit]
+Description=Live dashboards on the Lian Li 8.8" and Jungle Leopard in-case screens
+Documentation=file:///home/hieubt/Documents/cleanup-pc/screens/README.md
+After=graphical-session.target
+# The panels sit behind a USB hub that can take a moment to settle after resume;
+# the daemon reconnects on its own, this just avoids a restart storm meanwhile.
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+WorkingDirectory=/home/hieubt/Documents/cleanup-pc/screens
+# All settings (theme per panel, rotation, fps, palette, animation intensity,
+# owner card, brightness) live in config.toml next to the daemon — edit that
+# and `systemctl --user restart pc-screens`, no unit change needed.
+# Reference for every option: config.example.toml.
+ExecStart=/home/hieubt/Documents/cleanup-pc/screens/.venv/bin/python \
+          /home/hieubt/Documents/cleanup-pc/screens/panel_daemon.py \
+          --config /home/hieubt/Documents/cleanup-pc/screens/config.toml
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

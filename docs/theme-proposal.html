@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Đề xuất 10 theme — Lian Li 8.8" & Jungle Leopard</title>
+<style>
+  :root {
+    --bg: #0a0c10; --panel: #10141b; --line: #232a36;
+    --fg: #e8edf4; --dim: #8b98a8; --cy: #4fd8ff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--fg);
+         font: 15px/1.55 system-ui, "Segoe UI", sans-serif; padding: 28px 22px 60px; }
+  h1 { font-size: 24px; letter-spacing: .5px; }
+  h1 small { color: var(--dim); font-weight: 400; font-size: 14px; display: block; margin-top: 4px; }
+  h2 { font-size: 18px; margin: 38px 0 14px; color: var(--cy); letter-spacing: 2px; text-transform: uppercase; }
+  h2 small { color: var(--dim); font-weight: 400; letter-spacing: 0; text-transform: none; font-size: 13px; margin-left: 10px; }
+  .note { background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+          padding: 14px 18px; margin-top: 16px; color: var(--dim); font-size: 14px; }
+  .note b { color: var(--fg); }
+  code { background: #1a212c; padding: 1px 6px; border-radius: 5px; font-size: 13px; color: #9fd8ff; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+  .grid.wide { grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+          overflow: hidden; display: flex; }
+  .grid.wide .card { flex-direction: column; }
+  .pv { position: relative; overflow: hidden; flex: 0 0 auto;
+        width: 150px; height: 450px; }                 /* dọc ~1:3 */
+  .grid.wide .pv { width: 100%; height: 130px; }       /* ngang */
+  .info { padding: 14px 16px; flex: 1; }
+  .info h3 { font-size: 15px; letter-spacing: 1px; }
+  .info h3 .no { color: var(--dim); font-weight: 400; margin-right: 4px; }
+  .sw { display: flex; gap: 6px; margin: 8px 0 10px; }
+  .sw i { width: 22px; height: 14px; border-radius: 4px; display: block; background: var(--c); }
+  .info ul { list-style: none; font-size: 13px; color: var(--dim); }
+  .info li { padding-left: 14px; position: relative; margin-bottom: 3px; }
+  .info li::before { content: "▸"; position: absolute; left: 0; color: var(--cy); }
+  .info li b { color: var(--fg); font-weight: 600; }
+
+  /* ===================== previews ===================== */
+  .pv * { position: absolute; }
+  .clock { font-family: "DejaVu Sans Mono", ui-monospace, monospace; font-weight: 700; }
+
+  /* --- 1 NEON GRID (tron) --- */
+  .p-tron { background: #030711; }
+  .p-tron .floor { left: -50%; right: -50%; bottom: 0; height: 46%;
+    background:
+      repeating-linear-gradient(90deg, rgba(0,229,255,.55) 0 2px, transparent 2px 26px),
+      repeating-linear-gradient(0deg, rgba(0,229,255,.45) 0 2px, transparent 2px 22px);
+    transform: perspective(180px) rotateX(58deg);
+    animation: tronscroll 2.2s linear infinite; }
+  @keyframes tronscroll { to { background-position: 0 0, 0 22px; } }
+  .p-tron .clock { top: 9%; width: 100%; text-align: center; font-size: 26px; color: #dffaff;
+    text-shadow: 0 0 8px #00e5ff, 0 0 22px #00e5ff; }
+  .p-tron .bar { left: 12%; width: 76%; height: 5px; border: 1px solid #00e5ff66; border-radius: 3px; }
+  .p-tron .bar i { position: absolute; inset: 1px; width: var(--p); border-radius: 2px;
+    background: #00e5ff; box-shadow: 0 0 9px #00e5ff; animation: trail 3s ease-in-out infinite alternate; }
+  .p-tron .bar.o i { background: #ff9d2e; box-shadow: 0 0 9px #ff9d2e; }
+  @keyframes trail { from { width: calc(var(--p) - 12%); } to { width: var(--p); } }
+
+  /* --- 2 MATRIX --- */
+  .p-matrix { background: #020604; }
+  .p-matrix .col { top: -110%; color: #22cc66; font: 700 11px/1.25 ui-monospace, monospace;
+    writing-mode: vertical-rl; text-orientation: upright; letter-spacing: 1px;
+    animation: rain 3.4s linear infinite; opacity: .8; text-shadow: 0 0 6px #22cc66; }
+  @keyframes rain { to { transform: translateY(210%); } }
+  .p-matrix .clock { top: 40%; width: 100%; text-align: center; font-size: 25px; color: #b8ffd0;
+    text-shadow: 0 0 10px #33ff77; animation: crt .12s steps(2) infinite; }
+  @keyframes crt { 50% { opacity: .92; } }
+  .p-matrix .ro { width: 100%; text-align: center; font: 700 11px ui-monospace, monospace; color: #33ff77; }
+  .p-matrix .scan { left: 0; right: 0; height: 3px; background: rgba(120,255,170,.14);
+    animation: scanm 4s linear infinite; }
+  @keyframes scanm { from { top: -3%; } to { top: 103%; } }
+
+  /* --- 3 HOLO RING --- */
+  .p-holo { background: radial-gradient(circle at 50% 32%, #07131d 0%, #04080d 70%); }
+  .p-holo .ring { border-radius: 50%; border: 3px solid transparent; }
+  .p-holo .r1 { width: 92px; height: 92px; left: 29px; top: 14%;
+    background: conic-gradient(#35e0ff 0 62%, #123241 62% 100%);
+    -webkit-mask: radial-gradient(circle, transparent 56%, #000 57%);
+            mask: radial-gradient(circle, transparent 56%, #000 57%);
+    animation: spin 9s linear infinite; filter: drop-shadow(0 0 6px #35e0ff88); }
+  .p-holo .r2 { width: 110px; height: 110px; left: 20px; top: 11.6%;
+    border: 1px dashed #35e0ff55; border-radius: 50%; animation: spin 14s linear infinite reverse; }
+  .p-holo .pct { left: 0; width: 100%; top: 21%; text-align: center;
+    font: 700 17px ui-monospace, monospace; color: #d8f8ff; text-shadow: 0 0 8px #35e0ff; }
+  .p-holo .radar { width: 92px; height: 92px; left: 29px; top: 56%; border-radius: 50%;
+    border: 1px solid #35e0ff44;
+    background: conic-gradient(rgba(53,224,255,.5), transparent 22%);
+    animation: spin 2.6s linear infinite; }
+  .p-holo .clock { top: 3.5%; width: 100%; text-align: center; font-size: 20px; color: #d8f8ff;
+    text-shadow: 0 0 8px #35e0ff; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* --- 4 AURORA --- */
+  .p-aurora { background: #05070e; }
+  .p-aurora .b { width: 210px; height: 210px; border-radius: 50%; filter: blur(34px); opacity: .55; }
+  .p-aurora .b1 { background: #22e0a5; left: -70px; top: -8%; animation: drift 7s ease-in-out infinite alternate; }
+  .p-aurora .b2 { background: #4f6bff; right: -80px; top: 26%; animation: drift 9s ease-in-out infinite alternate-reverse; }
+  .p-aurora .b3 { background: #b44fff; left: -60px; bottom: -10%; animation: drift 8s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform: translate(26px, 34px) scale(1.15); } }
+  .p-aurora .glass { left: 10%; width: 80%; height: 12%; border-radius: 10px;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+    backdrop-filter: blur(3px); }
+  .p-aurora .clock { top: 7%; width: 100%; text-align: center; font-size: 24px; color: #fff;
+    font-weight: 600; letter-spacing: 1px; }
+
+  /* --- 5 SYNTHWAVE --- */
+  .p-synth { background: linear-gradient(#12041f 0%, #2b0a3d 55%, #0c0418 100%); }
+  .p-synth .sun { width: 88px; height: 88px; left: 31px; top: 22%; border-radius: 50%;
+    background: linear-gradient(#ffd34f, #ff5e7e 60%, #c239c8);
+    -webkit-mask: repeating-linear-gradient(#000 0 7px, transparent 7px 10px);
+            mask: repeating-linear-gradient(#000 0 7px, transparent 7px 10px);
+    animation: sunset 6s ease-in-out infinite alternate; }
+  @keyframes sunset { to { transform: translateY(7px); } }
+  .p-synth .floor { left: -50%; right: -50%; bottom: 0; height: 34%;
+    background: repeating-linear-gradient(90deg, #ff3ea555 0 2px, transparent 2px 24px),
+                repeating-linear-gradient(0deg, #ff3ea577 0 2px, transparent 2px 18px);
+    transform: perspective(150px) rotateX(60deg);
+    animation: tronscroll 1.8s linear infinite; }
+  .p-synth .clock { top: 6%; width: 100%; text-align: center; font-size: 25px; font-weight: 800;
+    background: linear-gradient(#7fe7ff, #ff71c5); -webkit-background-clip: text;
+    background-clip: text; color: transparent; }
+
+  /* --- 6 CARBON GAUGE --- */
+  .p-carbon { background:
+    repeating-linear-gradient(45deg, #101317 0 3px, #171b21 3px 6px); }
+  .p-carbon .g { width: 96px; height: 96px; border-radius: 50%; top: 14px;
+    background: conic-gradient(from 210deg, #ff4136 0 var(--a), #262c35 var(--a) 300deg, transparent 300deg);
+    -webkit-mask: radial-gradient(circle, transparent 58%, #000 59%);
+            mask: radial-gradient(circle, transparent 58%, #000 59%); }
+  .p-carbon .needle { width: 3px; height: 44px; background: #ffb14a; left: 50%; bottom: 50%;
+    transform-origin: bottom; box-shadow: 0 0 6px #ffb14a; border-radius: 2px;
+    animation: rev 1.6s ease-in-out infinite alternate; }
+  @keyframes rev { from { transform: rotate(-96deg); } to { transform: rotate(52deg); } }
+  .p-carbon .gwrap { width: 96px; height: 96px; top: 14px; }
+  .p-carbon .lbl { width: 96px; text-align: center; top: 116px;
+    font: 700 11px ui-monospace, monospace; color: #ffb14a; }
+  .p-carbon .shift { bottom: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; }
+  .p-carbon .shift i { position: static; width: 10px; height: 10px; border-radius: 50%;
+    background: #262c35; animation: shift 1.2s steps(1) infinite; }
+  .p-carbon .shift i:nth-child(2) { animation-delay: .15s; }
+  .p-carbon .shift i:nth-child(3) { animation-delay: .3s; }
+  .p-carbon .shift i:nth-child(4) { animation-delay: .45s; }
+  .p-carbon .shift i:nth-child(5) { animation-delay: .6s; }
+  @keyframes shift { 0% { background: #ff4136; box-shadow: 0 0 7px #ff4136; }
+                     70%, 100% { background: #262c35; box-shadow: none; } }
+
+  /* --- 7 OSCILLOSCOPE --- */
+  .p-scope { background: #041008; }
+  .p-scope .grat { inset: 0;
+    background: repeating-linear-gradient(90deg, #0d2a17 0 1px, transparent 1px 24px),
+                repeating-linear-gradient(0deg, #0d2a17 0 1px, transparent 1px 24px); }
+  .p-scope svg { inset: 0; width: 100%; height: 100%; }
+  .p-scope path { fill: none; stroke: #3dff88; stroke-width: 2.4;
+    filter: drop-shadow(0 0 5px #3dff88); stroke-dasharray: 600 600;
+    animation: sweep 2.4s linear infinite; }
+  .p-scope path.b { stroke: #ffe14a; filter: drop-shadow(0 0 5px #ffe14a);
+    animation-delay: -1.1s; opacity: .8; }
+  @keyframes sweep { from { stroke-dashoffset: 600; } to { stroke-dashoffset: -600; } }
+  .p-scope .ro { right: 10px; top: 8px; font: 700 12px ui-monospace, monospace; color: #3dff88;
+    text-shadow: 0 0 6px #3dff88; text-align: right; }
+
+  /* --- 8 SWISS --- */
+  .p-swiss { background: #0d0e10; }
+  .p-swiss .clock { left: 6%; top: 12%; font-size: 46px; font-weight: 800; color: #f4f5f7;
+    font-family: system-ui, "Helvetica Neue", sans-serif; letter-spacing: -2px; }
+  .p-swiss .rule { left: 6%; right: 6%; top: 62%; height: 2px; background: #2a2d33; }
+  .p-swiss .rule i { position: absolute; top: 0; bottom: 0; left: 0; width: 40%;
+    background: #ff3b30; animation: swiss 4s cubic-bezier(.4,0,.2,1) infinite alternate; }
+  @keyframes swiss { to { width: 78%; } }
+  .p-swiss .m { left: 6%; top: 70%; font: 500 12px system-ui, sans-serif; color: #8b98a8; }
+  .p-swiss .m b { color: #f4f5f7; font-weight: 700; margin-right: 4px; }
+  .p-swiss .dot { width: 8px; height: 8px; border-radius: 50%; background: #ff3b30;
+    right: 8%; top: 15%; animation: breathe 2s ease-in-out infinite; }
+  @keyframes breathe { 50% { transform: scale(1.6); opacity: .5; } }
+
+  /* --- 9 STARFIELD --- */
+  .p-star { background: radial-gradient(circle at 70% 30%, #0a1230 0%, #020310 65%); }
+  .p-star .s { inset: 0; background-image:
+      radial-gradient(1.5px 1.5px at 20% 30%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 70% 15%, #9fc4ff 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 45% 70%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 85% 60%, #cfe0ff 50%, transparent 51%),
+      radial-gradient(1px 1px at 10% 85%, #fff 50%, transparent 51%);
+    animation: fly 5s linear infinite; }
+  .p-star .s.far { opacity: .5; animation-duration: 9s; background-position: 40px 60px; }
+  @keyframes fly { to { transform: translateY(60px); } }
+  .p-star .orbit { width: 120px; height: 120px; left: 50%; top: 34%;
+    margin-left: -60px; border: 1px solid #4f6bff55; border-radius: 50%; }
+  .p-star .pl { width: 10px; height: 10px; border-radius: 50%; background: #7fb2ff;
+    box-shadow: 0 0 8px #7fb2ff; left: 50%; top: 34%; margin: -5px 0 0 -65px;
+    transform-origin: 65px 65px; animation: spin 6s linear infinite; }
+  .p-star .clock { top: 42%; width: 100%; text-align: center; font-size: 22px; color: #eaf2ff;
+    text-shadow: 0 0 12px #4f6bff; }
+
+  /* --- 10 PLASMA CORE --- */
+  .p-plasma { background: #0c0503; }
+  .p-plasma .core { width: 120px; height: 120px; left: 50%; top: 50%; margin: -60px 0 0 -60px;
+    border-radius: 50%; filter: blur(6px);
+    background: radial-gradient(circle, #fff3c4 0%, #ffb14a 30%, #ff5e2e 60%, transparent 72%);
+    animation: pulse 1.8s ease-in-out infinite alternate; }
+  @keyframes pulse { to { transform: scale(1.18); filter: blur(9px) hue-rotate(-14deg); } }
+  .p-plasma .em { width: 4px; height: 4px; border-radius: 50%; background: #ffcf7a;
+    bottom: -6px; animation: ember 2.6s linear infinite; opacity: 0; }
+  @keyframes ember { 8% { opacity: 1; } to { transform: translateY(-130px); opacity: 0; } }
+  .p-plasma .ro { width: 100%; top: 44%; text-align: center;
+    font: 800 20px ui-monospace, monospace; color: #fff3e0; text-shadow: 0 0 10px #ff8a3c; }
+
+  table { border-collapse: collapse; width: 100%; margin-top: 14px; font-size: 14px; }
+  th, td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; }
+  th { color: var(--cy); background: #0d1420; font-weight: 600; }
+  td code { white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<h1>Đề xuất 10 theme mới
+  <small>Lian Li 8.8" (480×1920) &amp; Jungle Leopard (960×480) — preview CSS mô phỏng; bản thật render bằng PIL cùng ngôn ngữ hoạt ảnh đã có (bolt, spark, ease, sample-clock)</small>
+</h1>
+
+<div class="note">
+  <b>Kế hoạch tổng:</b> ① hoàn thiện theme <b>electric</b> hiện tại + hệ tuỳ biến chung
+  (<code>--palette</code>, <code>--anim</code>) áp dụng cho <b>mọi</b> theme ·
+  ② xoá 5 view cũ (system-monitor, clock, clock-hud, net-activity, top-procs) ·
+  ③ dựng 10 theme dưới đây · ④ quay GIF từng theme ở đúng fps để anh duyệt ·
+  ⑤ tạo repo private bằng <code>gh</code> và push toàn bộ code + config + tư liệu.
+</div>
+
+<h2>Theme dọc <small>tối ưu cho canvas đứng 480×1920 và 480×960 (cách lắp hiện tại)</small></h2>
+<div class="grid">
+
+  <div class="card"><div class="pv p-tron">
+      <div class="clock">21:47</div>
+      <div class="bar" style="top:24%;--p:72%"><i></i></div>
+      <div class="bar o" style="top:31%;--p:45%"><i></i></div>
+      <div class="bar" style="top:38%;--p:58%"><i></i></div>
+      <div class="floor"></div>
+    </div>
+    <div class="info"><h3><span class="no">1 ·</span> NEON GRID</h3>
+      <div class="sw"><i style="--c:#00e5ff"></i><i style="--c:#ff9d2e"></i><i style="--c:#dffaff"></i><i style="--c:#0a2740"></i></div>
+      <ul>
+        <li><b>Sàn lưới Tron</b> cuộn về chân trời, tốc độ cuộn theo tải CPU</li>
+        <li>Thanh đo = <b>vệt light-cycle</b> để lại đuôi sáng</li>
+        <li>Số liệu viền neon 2 lớp (lõi trắng + quầng)</li>
+      </ul>
+    </div></div>
+
+  <div class="card"><div class="pv p-matrix">
+      <div class="col" style="left:8%; animation-delay:0s">ｱ7ﾈ0ｼ1ﾂ9ｹ</div>
+      <div class="col" style="left:26%; animation-delay:-1.2s">0ﾊ4ﾋ8ｿ2ﾎ</div>
+      <div class="col" style="left:47%; animation-delay:-2.1s">ﾈ5ｱ1ﾒ7ｸ3ﾜ</div>
+      <div class="col" style="left:66%; animation-delay:-.6s">9ﾂ2ｼ6ﾅ0ﾘ</div>
+      <div class="col" style="left:84%; animation-delay:-2.8s">ﾄ3ﾊ8ｿ4ﾑ1</div>
+      <div class="clock">21:47</div>
+      <div class="ro" style="top:56%">CPU 34%</div>
+      <div class="ro" style="top:63%; color:#b8ffd0">MEM 41%</div>
+      <div class="scan"></div>
+    </div>
+    <div class="info"><h3><span class="no">2 ·</span> MATRIX RAIN</h3>
+      <div class="sw"><i style="--c:#33ff77"></i><i style="--c:#22cc66"></i><i style="--c:#b8ffd0"></i><i style="--c:#031007"></i></div>
+      <ul>
+        <li><b>Mưa glyph katakana</b>, mật độ mưa tăng theo tải hệ thống</li>
+        <li>Chữ phosphor xanh + <b>nhiễu CRT</b> và scanline chạy</li>
+        <li>Số liệu kiểu terminal, đổi giá trị bằng hiệu ứng giải mã</li>
+      </ul>
+    </div></div>
+
+  <div class="card"><div class="pv p-holo">
+      <div class="clock">21:47</div>
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="pct">34%</div>
+      <div class="radar"></div>
+    </div>
+    <div class="info"><h3><span class="no">3 ·</span> HOLO RING</h3>
+      <div class="sw"><i style="--c:#35e0ff"></i><i style="--c:#8ff7d8"></i><i style="--c:#d8f8ff"></i><i style="--c:#0a2030"></i></div>
+      <ul>
+        <li>CPU/GPU/MEM = <b>vòng cung hologram</b> xoay ngược chiều nhau</li>
+        <li><b>Radar sweep</b> quét liên tục ở đáy, blip theo tiến trình nặng</li>
+        <li>Kiểu JARVIS/Iron Man: nét mảnh, lớp kính, rung hologram nhẹ</li>
+      </ul>
+    </div></div>
+
+  <div class="card"><div class="pv p-aurora">
+      <div class="b b1"></div><div class="b b2"></div><div class="b b3"></div>
+      <div class="clock">21:47</div>
+      <div class="glass" style="top:22%"></div>
+      <div class="glass" style="top:37%"></div>
+      <div class="glass" style="top:52%"></div>
+    </div>
+    <div class="info"><h3><span class="no">4 ·</span> AURORA GLASS</h3>
+      <div class="sw"><i style="--c:#22e0a5"></i><i style="--c:#4f6bff"></i><i style="--c:#b44fff"></i><i style="--c:#0b0e18"></i></div>
+      <ul>
+        <li><b>Cực quang</b> nhiều lớp trôi chậm phía sau, màu dịch theo nhiệt độ CPU</li>
+        <li>Thẻ số liệu <b>kính mờ</b> (glassmorphism) hiện đại, tối giản</li>
+        <li>Êm và sang — đối trọng "calm" với các theme neon</li>
+      </ul>
+    </div></div>
+
+  <div class="card"><div class="pv p-synth">
+      <div class="clock">21:47</div>
+      <div class="sun"></div>
+      <div class="floor"></div>
+    </div>
+    <div class="info"><h3><span class="no">5 ·</span> SYNTHWAVE</h3>
+      <div class="sw"><i style="--c:#ff71c5"></i><i style="--c:#7fe7ff"></i><i style="--c:#ffd34f"></i><i style="--c:#2b0a3d"></i></div>
+      <ul>
+        <li><b>Mặt trời retro sọc ngang</b> phập phồng theo nhịp tải</li>
+        <li>Lưới tím-hồng cuộn về chân trời, sao băng thi thoảng</li>
+        <li>Đồng hồ <b>chrome gradient</b> hai tông kiểu poster 1986</li>
+      </ul>
+    </div></div>
+</div>
+
+<h2>Theme ngang <small>tối ưu cho canvas 1920×480 và 960×480 (khi xoay panel về ngang)</small></h2>
+<div class="grid wide">
+
+  <div class="card"><div class="pv p-carbon">
+      <div class="gwrap" style="left:24px"><div class="g" style="--a:190deg; position:absolute; inset:0"></div><div class="needle"></div></div>
+      <div class="lbl" style="left:24px">CPU 63%</div>
+      <div class="gwrap" style="left:170px"><div class="g" style="--a:120deg; position:absolute; inset:0; filter:hue-rotate(40deg)"></div><div class="needle" style="animation-duration:2.3s"></div></div>
+      <div class="lbl" style="left:170px">GPU 40%</div>
+      <div class="gwrap" style="left:316px"><div class="g" style="--a:150deg; position:absolute; inset:0; filter:hue-rotate(80deg)"></div><div class="needle" style="animation-duration:1.9s"></div></div>
+      <div class="lbl" style="left:316px">MEM 50%</div>
+      <div class="shift"><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="info"><h3><span class="no">6 ·</span> CARBON GAUGE</h3>
+      <div class="sw"><i style="--c:#ff4136"></i><i style="--c:#ffb14a"></i><i style="--c:#f4f5f7"></i><i style="--c:#14181d"></i></div>
+      <ul>
+        <li><b>Đồng hồ kim kiểu xe đua</b> — kim vật lý có quán tính (lò xo/damping)</li>
+        <li>Nền vân <b>carbon fiber</b>, vạch redline đỏ khi &gt;80%</li>
+        <li><b>Dàn shift-light</b> nháy dần khi tải tăng cao như lên vòng tua</li>
+      </ul>
+    </div></div>
+
+  <div class="card"><div class="pv p-scope">
+      <div class="grat"></div>
+      <svg viewBox="0 0 460 130" preserveAspectRatio="none">
+        <path d="M0,65 Q20,20 40,65 T80,65 Q95,110 115,65 T155,65 Q175,15 195,65 T235,65 Q255,100 275,65 T315,65 Q335,25 355,65 T395,65 Q415,95 435,65 T475,65"/>
+        <path class="b" d="M0,80 Q30,55 60,80 T120,80 Q150,50 180,80 T240,80 Q270,60 300,80 T360,80 Q390,55 420,80 T480,80"/>
+      </svg>
+      <div class="ro">CPU 34%<br>ΔT 2ms</div>
+    </div>
+    <div class="info"><h3><span class="no">7 ·</span> OSCILLOSCOPE</h3>
+      <div class="sw"><i style="--c:#3dff88"></i><i style="--c:#ffe14a"></i><i style="--c:#9fffc8"></i><i style="--c:#07160c"></i></div>
+      <ul>
+        <li>Mỗi metric là một <b>kênh sóng thật</b> (lịch sử thành waveform cuộn)</li>
+        <li><b>Lưu ảnh phosphor</b>: vệt cũ mờ dần như CRT thật</li>
+        <li>Graticule + số đo kiểu máy hiện sóng, trigger nhấp nháy</li>
+      </ul>
+    </div></div>
+
+  <div class="card"><div class="pv p-swiss">
+      <div class="clock">21:47</div>
+      <div class="dot"></div>
+      <div class="rule"><i></i></div>
+      <div class="m"><b>CPU 34%</b> · GPU 12% · MEM 41% · 52°C</div>
+    </div>
+    <div class="info"><h3><span class="no">8 ·</span> SWISS MINIMAL</h3>
+      <div class="sw"><i style="--c:#f4f5f7"></i><i style="--c:#ff3b30"></i><i style="--c:#8b98a8"></i><i style="--c:#0d0e10"></i></div>
+      <ul>
+        <li><b>Typography khổng lồ</b> kiểu Thuỵ Sĩ — chỉ chữ, kẻ mảnh, 1 màu nhấn</li>
+        <li>Một <b>vạch đỏ duy nhất</b> trượt mượt theo tổng tải</li>
+        <li>Chấm giây thở chậm — theme "im lặng" nhất bộ, cực hiện đại</li>
+      </ul>
+    </div></div>
+
+  <div class="card"><div class="pv p-star">
+      <div class="s"></div><div class="s far"></div>
+      <div class="orbit"></div><div class="pl"></div>
+      <div class="clock">21:47</div>
+    </div>
+    <div class="info"><h3><span class="no">9 ·</span> DEEP SPACE</h3>
+      <div class="sw"><i style="--c:#7fb2ff"></i><i style="--c:#4f6bff"></i><i style="--c:#eaf2ff"></i><i style="--c:#050818"></i></div>
+      <ul>
+        <li><b>Trường sao warp</b> 3 lớp parallax, tốc độ bay theo tải CPU</li>
+        <li>Metric = <b>hành tinh trên quỹ đạo</b>, chu kỳ quay theo giá trị</li>
+        <li>Sao chổi lướt qua khi có spike tải</li>
+      </ul>
+    </div></div>
+
+  <div class="card"><div class="pv p-plasma">
+      <div class="core"></div>
+      <div class="em" style="left:30%; animation-delay:0s"></div>
+      <div class="em" style="left:44%; animation-delay:-.9s"></div>
+      <div class="em" style="left:58%; animation-delay:-1.7s"></div>
+      <div class="em" style="left:70%; animation-delay:-.4s"></div>
+      <div class="ro">62°C · 34%</div>
+    </div>
+    <div class="info"><h3><span class="no">10 ·</span> PLASMA CORE</h3>
+      <div class="sw"><i style="--c:#ff5e2e"></i><i style="--c:#ffb14a"></i><i style="--c:#fff3c4"></i><i style="--c:#160804"></i></div>
+      <ul>
+        <li><b>Lõi plasma</b> phập phồng — kích thước & màu theo nhiệt độ (lạnh cam → nóng trắng)</li>
+        <li><b>Tàn lửa</b> bay lên liên tục, mật độ theo công suất GPU (W)</li>
+        <li>Vành đo nhiệt bao quanh lõi kiểu lò phản ứng</li>
+      </ul>
+    </div></div>
+</div>
+
+<h2>Hệ tuỳ biến chung <small>áp dụng cho electric + cả 10 theme mới</small></h2>
+<table>
+  <tr><th>Cờ</th><th>Giá trị</th><th>Ý nghĩa</th></tr>
+  <tr><td><code>--palette</code> / <code>--palette-lianli</code> / <code>--palette-jungle</code></td>
+      <td><code>cyan · ember · violet · lime · ice · mono</code><br><code>custom:#00e5ff,#ff9d2e,#ffd34f,#b44fff</code></td>
+      <td>Bảng màu đặt tên sẵn, hoặc tự đưa 4 mã hex (accent chính, phụ, nóng, nền). Mọi theme đọc màu qua palette nên đổi 1 cờ là đổi toàn bộ.</td></tr>
+  <tr><td><code>--anim</code></td>
+      <td><code>calm · normal · intense</code></td>
+      <td>Nhân toàn bộ nhịp hoạt ảnh (HZ_ARC, HZ_PIP, mật độ hạt…) ×0.5 / ×1 / ×1.6 — vẫn tách khỏi fps như hiện tại.</td></tr>
+  <tr><td><code>--view-*</code></td>
+      <td><code>electric · neon-grid · matrix · holo-ring · aurora · synthwave · carbon-gauge · oscilloscope · swiss · deep-space · plasma-core</code></td>
+      <td>Chọn theme cho từng màn. Theme nào cũng render được cả dọc lẫn ngang (tự thích ứng), nhóm "dọc/ngang" chỉ là hướng được tối ưu nhất.</td></tr>
+</table>
+
+<div class="note" style="margin-top:22px">
+  Sau khi anh chốt, tôi sẽ implement toàn bộ, chạy thật trên 2 màn, <b>quay GIF từng theme
+  ở đúng fps</b> gửi anh duyệt, rồi tạo repo private và push.
+</div>
+
+</body>
+</html>

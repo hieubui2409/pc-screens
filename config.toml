@@ -1,0 +1,37 @@
+# Live settings for this machine — see config.example.toml for every option.
+# Both panels are mounted vertically, so each renders on a portrait canvas and
+# gets rotated into its own framebuffer — opposite directions, because the two
+# panels sit the opposite way up relative to their native orientation.
+
+[global]
+readout_hz = 2.0
+anim = "normal"
+
+[owner]
+name = "Lucas Bui"
+role = "Senior AI Engineer"
+date = "24/09/1997"
+
+[lianli]
+view = "system-electric"
+rotate = 0
+fps = 19.0           # measured ceiling 22.6 — just under, no frame backlog
+
+[jungle]
+view = "clock-electric"
+rotate = 90
+fps = 17.0           # measured ceiling 20.0
+brightness = 100
+
+[led]
+enabled = true
+style = "sweep"
+fps = 24.0
+brightness = 0.3
+offset = 48          # LED 0 nằm giữa cạnh trái, vòng theo chiều kim đồng hồ
+
+[case_led]
+enabled = false      # tắt theo yêu cầu — đèn case giữ hiệu ứng gốc của firmware
+fps = 10.0
+brightness = 0.7
+min_devices = 2

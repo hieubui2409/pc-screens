@@ -1,0 +1,66 @@
+# pc-screens configuration
+# ========================
+# Copy to one of (first found wins), or pass --config FILE:
+#   ~/.config/pc-screens/config.toml
+#   <repo>/screens/config.toml
+# Every key is optional and has the default shown; CLI flags override the file.
+
+[global]
+fps = 2.0            # frames per second for both panels (per-panel fps wins)
+readout_hz = 2.0     # how often the digits may change — NOT the frame rate:
+                     # fps buys smooth motion, this keeps numbers readable
+anim = "normal"      # calm | normal | intense — animation busyness, decoupled
+                     # from fps (scales lightning rate, particle counts, ...)
+palette = ""         # recolour every theme: spectrum, cyan, ember, violet,
+                     # lime, ice, mono, or "custom:#00e5ff,#ff9d2e,#ffd34f,#b44fff"
+                     # "" = each theme's own signature palette
+
+[owner]              # shown by the clock themes
+name = ""            # e.g. "Lucas Bui"
+role = ""            # e.g. "Senior AI Engineer"
+date = ""            # e.g. "24/09/1997"
+
+[lianli]             # Lian Li 8.8" (480x1920 native)
+view = "system-electric"
+                     # vertical themes:   system-electric, clock-electric,
+                     #                    neon-grid, matrix, holo-ring,
+                     #                    aurora, synthwave
+                     # horizontal themes: carbon-gauge, oscilloscope,
+                     #                    mission-control, deep-space,
+                     #                    plasma-core
+rotate = 90          # quarter turns counter-clockwise: 0 | 90 | 180 | 270
+fps = 0.0            # 0 = use [global].fps; measured ceiling here: 22.6
+brightness = -1      # 0-100; -1 = leave the panel's own setting alone
+palette = ""         # per-panel palette override
+
+[jungle]             # Jungle Leopard / HONGTAI 9.16" (960x480 native)
+view = "clock-electric"
+rotate = 0
+fps = 0.0            # measured ceiling here: 20.0
+brightness = -1
+palette = ""
+
+[led]                # ARGB ring around the Lian Li screen (0416:8050, 60 LEDs)
+enabled = true
+style = "sweep"      # sweep:  ring stays dark, only the LEDs level with the
+                     #         on-screen scanline glow and fade fast behind it
+                     # aurora: palette gradient breathing around the ring with
+                     #         CPU-load sparks (plus the sweep echo on top)
+fps = 24.0
+brightness = 0.6     # 0.0-1.0 — the ring is bright; 1.0 floods the case
+layout = "ring"      # ring:   one chain looping the perimeter clockwise
+                     # mirror: two chains, first half down the right edge,
+                     #         second half down the left edge
+offset = 0           # which LED index sits at the layout's start point —
+reverse = false      # rotate / flip until the sweep echo tracks the on-screen
+                     # scanline (the hardware doesn't report its own layout)
+
+[case_led]           # every other RGB device, via the OpenRGB SDK server
+enabled = false      # needs `systemctl --user enable --now openrgb-server`
+                     # (unit in systemd/) and pip package openrgb-python;
+                     # fans breathe the theme palette with CPU-load sparks,
+                     # the GPU warms from accent toward white with its temp
+fps = 10.0           # motherboard ARGB headers are slow HID — 10 is plenty
+brightness = 0.7
+min_devices = 1      # bounce the server (max 3x) until it detects at least
+                     # this many devices — i2c GPUs miss ~1 scan in 3

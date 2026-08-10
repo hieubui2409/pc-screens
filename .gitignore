@@ -1,0 +1,9 @@
+# local environment
+.venv/
+__pycache__/
+*.pyc
+
+# third-party reference clones (own repos, several GB — see README for links)
+infopanel/
+jungleleopard/
+lian-li-linux/

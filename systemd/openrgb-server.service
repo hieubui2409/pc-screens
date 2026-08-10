@@ -1,0 +1,14 @@
+[Unit]
+Description=OpenRGB SDK server (case LED sync for pc-screens)
+# pc-screens' case_led worker connects to this on localhost:6742. Direct i2c/
+# HID access needs the udev rules OpenRGB ships; the server owns the devices
+# so only one process ever talks to them.
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/openrgb --server --server-host 127.0.0.1
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
