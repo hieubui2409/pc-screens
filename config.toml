@@ -28,7 +28,8 @@ enabled = true
 style = "sweep"
 fps = 24.0
 brightness = 0.3
-offset = 48          # LED 0 nằm giữa cạnh trái, vòng theo chiều kim đồng hồ
+offset = 48          # LED 0 nằm giữa cạnh trái…
+reverse = true       # …và chuỗi chạy xuống dưới trước (ngược kim đồng hồ)
 
 [case_led]
 enabled = false      # tắt theo yêu cầu — đèn case giữ hiệu ứng gốc của firmware
