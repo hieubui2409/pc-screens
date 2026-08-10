@@ -66,22 +66,24 @@ LED_STYLE = "sweep"     # sweep: dark ring, only the scanline echo lights
 LED_LAYOUT = "ring"     # ring: one chain around the perimeter
                         # mirror: two chains, each running down one vertical
                         #         edge (first half right, second half left)
-LED_SKEW_LEFT = 0       # shift the LEFT edge only, in whole LEDs: positive
-                        # lights it that much sooner. Needed when the bezel's
-                        # real corner LED counts differ from the ideal ring by
-                        # one, which skews the two edges against each other.
+LED_SKEW_LEFT = 0       # shift one edge only, in whole LEDs: positive lights
+LED_SKEW_RIGHT = 0      # it that much sooner. Needed when the bezel's real
+                        # corner LED counts differ from the ideal ring by one,
+                        # which skews the two edges against each other.
 
 
 def set_led_layout(offset: int, reverse: bool, style: str = "sweep",
-                   layout: str = "ring", skew_left: int = 0) -> None:
-    global LED_OFFSET, LED_REVERSE, LED_STYLE, LED_LAYOUT, LED_SKEW_LEFT
+                   layout: str = "ring", skew_left: int = 0,
+                   skew_right: int = 0) -> None:
+    global LED_OFFSET, LED_REVERSE, LED_STYLE, LED_LAYOUT
+    global LED_SKEW_LEFT, LED_SKEW_RIGHT
     if style not in ("sweep", "aurora"):
         raise ValueError(f"unknown led style {style!r} (sweep or aurora)")
     if layout not in ("ring", "mirror"):
         raise ValueError(f"unknown led layout {layout!r} (ring or mirror)")
     LED_OFFSET, LED_REVERSE = int(offset), bool(reverse)
     LED_STYLE, LED_LAYOUT = style, layout
-    LED_SKEW_LEFT = int(skew_left)
+    LED_SKEW_LEFT, LED_SKEW_RIGHT = int(skew_left), int(skew_right)
 
 
 # =============================================================================
@@ -534,7 +536,8 @@ class FXBase:
         LED_OFFSET/LED_REVERSE (config [led]) calibrate the real index origin
         and winding, which the hardware doesn't report.
         """
-        key = (n, LED_OFFSET, LED_REVERSE, LED_LAYOUT, LED_SKEW_LEFT)
+        key = (n, LED_OFFSET, LED_REVERSE, LED_LAYOUT,
+               LED_SKEW_LEFT, LED_SKEW_RIGHT)
         cached = getattr(self, "_led_pos", None)
         if cached and cached[0] == key:
             return cached[1]
@@ -559,11 +562,12 @@ class FXBase:
                 pos.append((1.0 - (s - w - h) / w, 1.0))
             else:                           # left edge, up
                 pos.append((0.0, 1.0 - (s - 2 * w - h) / h))
-        if LED_SKEW_LEFT:
+        if LED_SKEW_LEFT or LED_SKEW_RIGHT:
             # One chain step on a vertical edge, in y units.
             pitch = 2 * (w + h) / (n * h)
-            pos = [(x, min(1.0, max(0.0, y - LED_SKEW_LEFT * pitch)))
-                   if x == 0.0 else (x, y) for x, y in pos]
+            skew = {0.0: LED_SKEW_LEFT, 1.0: LED_SKEW_RIGHT}
+            pos = [(x, min(1.0, max(0.0, y - skew.get(x, 0) * pitch)))
+                   for x, y in pos]
         self._led_pos = (key, pos)
         return pos
 

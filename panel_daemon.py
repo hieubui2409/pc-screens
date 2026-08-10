@@ -147,7 +147,7 @@ DEFAULTS = {
                "brightness": -1, "palette": ""},
     "led": {"enabled": True, "fps": 24.0, "brightness": 0.6,
             "offset": 0, "reverse": False, "style": "sweep", "layout": "ring",
-            "skew_left": 0},
+            "skew_left": 0, "skew_right": 0},
     "case_led": {"enabled": False, "fps": 10.0, "brightness": 0.7,
                  "min_devices": 1},
 }
@@ -319,7 +319,7 @@ def main() -> int:
     try:
         fx.set_led_layout(led_cfg["offset"], led_cfg["reverse"],
                           led_cfg["style"], led_cfg["layout"],
-                          led_cfg["skew_left"])
+                          led_cfg["skew_left"], led_cfg["skew_right"])
     except ValueError as e:
         p.error(str(e))
     panels = ["lianli", "jungle"] if not args.only else [args.only]
