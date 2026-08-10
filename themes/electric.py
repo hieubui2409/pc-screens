@@ -285,7 +285,7 @@ class ElectricClockView(FXBase):
             d.text((pad, my), label, font=self.f_small, fill=base)
             lw = d.textlength(label, font=self.f_small)
             self._pips(d, pad + lw + w * 0.02, my + self.f_small.size * 0.34,
-                       self.f_small.size * 0.30, hot, 0, n=2)
+                       self.f_small.size * 0.30, hot, 0)
             d.text((pct_right - d.textlength(pct_txt, font=self.f_small), my),
                    pct_txt, font=self.f_small, fill=self.pal.fg)
             if detail:
