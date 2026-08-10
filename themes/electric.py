@@ -15,8 +15,8 @@ from collections import deque
 from PIL import Image, ImageDraw, ImageFilter
 
 from lianli88 import load_font
-from fx import (FXBase, Palette, PALETTES, dens, hz, load_mono, sample_serial,
-                scale, stats, vitals)
+from fx import (FXBase, Palette, PALETTES, dens, hz, load_mono, mix,
+                sample_serial, scale, stats, vitals)
 
 DEFAULT_PALETTE = PALETTES["spectrum"]
 
@@ -299,10 +299,22 @@ class ElectricClockView(FXBase):
         up = v.uptime
         d.text((pad, fy), f"UP {up // 86400}D {up % 86400 // 3600:02d}H {up % 3600 // 60:02d}M",
                font=self.f_small, fill=self.pal.dim)
-        step = int(self.t * hz(self.HZ_MARK))
-        marker = "".join("█" if (step + i) % 6 < 3 else "░" for i in range(6))
-        d.text((w - pad - d.textlength(marker, font=self.f_small), fy),
-               marker, font=self.f_small, fill=cy_)
+        # activity wave: slanted HUD segments with a glow gliding through —
+        # continuous wall-clock motion, the crest tipped toward hot
+        segs = 10
+        sh = self.f_small.size * 0.92
+        sw = sh * 0.36
+        gap = sw * 0.85
+        slant = sh * 0.42
+        x0 = w - pad - (segs * (sw + gap) - gap + slant)
+        ph = self.t * hz(1.1) * math.tau
+        for i in range(segs):
+            v = 0.5 + 0.5 * math.sin(ph - i * 0.62)
+            v *= v  # sharpen: long dark tail, narrow bright crest
+            sx = x0 + i * (sw + gap)
+            d.polygon([(sx + slant, fy), (sx + slant + sw, fy),
+                       (sx + sw, fy + sh), (sx, fy + sh)],
+                      fill=mix(scale(cy_, 0.30), cyh, v))
 
         self._scanline(img)
         return img.convert("RGB")
