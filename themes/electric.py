@@ -190,6 +190,9 @@ class ElectricClockView(FXBase):
         cy_, cyh = self.col("cpu"), self.col("cpu", True)
         lm, lmh = self.col("gpu"), self.col("gpu", True)
         mg, mgh = self.col("ssd"), self.col("ssd", True)
+        # the clock block gets the palette's fourth accent — the one accent the
+        # meters don't use, so time reads as its own thing, not another metric
+        ck, ckh = self.col("ram"), self.col("ram", True)
         sep = scale(self.pal.dim, 0.35)
         pad = w * 0.09
 
@@ -211,15 +214,15 @@ class ElectricClockView(FXBase):
         hhmm = time.strftime("%H:%M", now)
         tw = d.textlength(hhmm, font=self.f_time)
         tx, tyy = (w - tw) / 2, h * 0.125
-        self.glow_text(img, hhmm, self.f_time, (tx, tyy), cy_)
+        self.glow_text(img, hhmm, self.f_time, (tx, tyy), ck)
         d = ImageDraw.Draw(img)
         d.text((tx, tyy), hhmm, font=self.f_time, fill=self.pal.fg)
-        dim = scale(cy_, 0.62)
+        dim = scale(ck, 0.62)
         for edge, prob in ((0.0, 1.0), (1.0, 0.55)):
             if self.rng.random() > prob:
                 continue
             ay = tyy + (self.f_time.size * 1.02 if edge else -h * 0.012)
-            self._bolt(d, pad, ay, w - pad, ay, h * 0.011, dim, cy_, segs=9, width=1)
+            self._bolt(d, pad, ay, w - pad, ay, h * 0.011, dim, ck, segs=9, width=1)
 
         # --- seconds as an electric track ---
         # Fractional, so the electrode glides across the minute instead of
@@ -228,8 +231,8 @@ class ElectricClockView(FXBase):
         sec = time.time() % 60.0
         sy = tyy + self.f_time.size * 1.16
         sbh = h * 0.024
-        self._electric_bar(d, pad, sy, w - pad * 2, sbh, sec / 60.0, cy_, cyh)
-        d.text((pad, sy + sbh * 1.9), f"{int(sec):02d}s", font=self.f_small, fill=cy_)
+        self._electric_bar(d, pad, sy, w - pad * 2, sbh, sec / 60.0, ck, ckh)
+        d.text((pad, sy + sbh * 1.9), f"{int(sec):02d}s", font=self.f_small, fill=ck)
         lbl = time.strftime("%d/%m/%Y", now)
         d.text((w - pad - d.textlength(lbl, font=self.f_small), sy + sbh * 1.9),
                lbl, font=self.f_small, fill=self.pal.dim)
