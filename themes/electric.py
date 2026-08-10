@@ -217,12 +217,11 @@ class ElectricClockView(FXBase):
         self.glow_text(img, hhmm, self.f_time, (tx, tyy), ck)
         d = ImageDraw.Draw(img)
         d.text((tx, tyy), hhmm, font=self.f_time, fill=self.pal.fg)
-        dim = scale(ck, 0.62)
-        for edge, prob in ((0.0, 1.0), (1.0, 0.55)):
-            if self.rng.random() > prob:
-                continue
-            ay = tyy + (self.f_time.size * 1.02 if edge else -h * 0.012)
-            self._bolt(d, pad, ay, w - pad, ay, h * 0.011, dim, ck, segs=9, width=1)
+        # one clean bolt framing the clock from above — the seconds bar below
+        # carries its own discharge, so a second bolt there only made clutter
+        ay = tyy - h * 0.012
+        self._bolt(d, pad, ay, w - pad, ay, h * 0.011, scale(ck, 0.62), ck,
+                   segs=9, width=1)
 
         # --- seconds as an electric track ---
         # Fractional, so the electrode glides across the minute instead of
