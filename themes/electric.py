@@ -231,13 +231,20 @@ class ElectricClockView(FXBase):
         sy = tyy + self.f_time.size * 1.16
         sbh = h * 0.024
         self._electric_bar(d, pad, sy, w - pad * 2, sbh, sec / 60.0, ck, ckh)
-        d.text((pad, sy + sbh * 1.9), f"{int(sec):02d}s", font=self.f_small, fill=ck)
+        # seconds readout spans two small lines; the date keeps its single line
+        f_sec = load_mono(int(self.f_small.size * 2.2))
+        sty = sy + sbh * 1.6
+        stxt = f"{int(sec):02d}"
+        d.text((pad, sty), stxt, font=f_sec, fill=ck)
+        d.text((pad + d.textlength(stxt, font=f_sec) + w * 0.012,
+                sty + f_sec.size - self.f_small.size * 1.25),
+               "s", font=self.f_small, fill=scale(ck, 0.8))
         lbl = time.strftime("%d/%m/%Y", now)
         d.text((w - pad - d.textlength(lbl, font=self.f_small), sy + sbh * 1.9),
                lbl, font=self.f_small, fill=self.pal.dim)
 
         # --- date ---
-        dy = sy + sbh + h * 0.055
+        dy = sty + f_sec.size * 1.3
         self.spaced_text(d, time.strftime("%A", now).upper(), self.f_date, dy,
                          self.pal.fg, w * 0.012)
 
