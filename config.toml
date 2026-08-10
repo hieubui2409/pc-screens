@@ -28,7 +28,7 @@ enabled = true
 style = "sweep"
 fps = 24.0
 brightness = 0.3
-offset = 48          # LED 0 nằm giữa cạnh trái…
+offset = 51          # LED 0 ở ~1/3 trên cạnh trái… (cân bằng mắt 3 lần quan sát)
 reverse = true       # …và chuỗi chạy xuống dưới trước (ngược kim đồng hồ)
 
 [case_led]
