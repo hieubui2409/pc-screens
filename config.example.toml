@@ -54,6 +54,8 @@ layout = "ring"      # ring:   one chain looping the perimeter clockwise
 offset = 0           # which LED index sits at the layout's start point —
 reverse = false      # rotate / flip until the sweep echo tracks the on-screen
                      # scanline (the hardware doesn't report its own layout)
+skew_left = 0        # shift the LEFT edge alone by whole LEDs (positive =
+                     # lights sooner) when the two edges track out of step
 
 [case_led]           # every other RGB device, via the OpenRGB SDK server
 enabled = false      # needs `systemctl --user enable --now openrgb-server`
