@@ -240,9 +240,7 @@ class ElectricClockView(FXBase):
                 sty + f_sec.size - self.f_small.size * 1.25),
                "s", font=self.f_small, fill=scale(ck, 0.8))
         lbl = time.strftime("%d/%m/%Y", now)
-        f_lbl = f_sec
-        while d.textlength(lbl, font=f_lbl) > w * 0.62 and f_lbl.size > self.f_small.size:
-            f_lbl = load_mono(int(f_lbl.size * 0.94))
+        f_lbl = load_mono(int(self.f_small.size * 1.5))
         d.text((w - pad - d.textlength(lbl, font=f_lbl),
                 sty + f_sec.size - f_lbl.size),
                lbl, font=f_lbl, fill=self.pal.dim)
